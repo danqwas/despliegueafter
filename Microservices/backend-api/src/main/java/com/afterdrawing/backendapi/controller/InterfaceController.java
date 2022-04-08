@@ -7,6 +7,10 @@ import com.afterdrawing.backendapi.core.service.ProjectService;
 import com.afterdrawing.backendapi.core.service.UserService;
 import com.afterdrawing.backendapi.resource.InterfaceResource;
 import com.afterdrawing.backendapi.resource.SaveInterfaceResource;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,12 +38,20 @@ public class InterfaceController {
     @Autowired
     public InterfaceService interfaceService;
 
+    @Operation(summary = "Post Interfaces", description = "Post Interfaces", tags = { "interfaces" })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Interface created", content = @Content(mediaType = "application/json"))
+    })
     @PostMapping("/users/{userId}/projects/{projectId}/interfaces")
     public InterfaceResource createInterface( @PathVariable(name = "userId") Long userId,
                                               @PathVariable(name = "projectId") Long projectId,
                                               @Valid @RequestBody SaveInterfaceResource resource){
         return convertToResourceInterface(interfaceService.saveInterface( convertToEntityInterface(resource), userId,projectId ));
     }
+    @Operation(summary = "Get Interface by Project Id", description = "Get All Interfaces by Project Id", tags = { "interfaces" })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All Interfaces returned", content = @Content(mediaType = "application/json"))
+    })
     @GetMapping("/projects/{projectId}/interfaces")
     public Page<InterfaceResource> getAllInterfacesByProjectId(
             @PathVariable(name = "projectId") Long projectId,
@@ -48,6 +60,10 @@ public class InterfaceController {
         List<InterfaceResource> resources = interfacePage.getContent().stream().map(this::convertToResourceInterface).collect(Collectors.toList());
         return new PageImpl<>(resources, pageable, resources.size());
     }
+    @Operation(summary = "Get Interfaces by User Id", description = "Get Interfaces by User Id", tags = { "interfaces" })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All Interfaces returned", content = @Content(mediaType = "application/json"))
+    })
     @GetMapping("/users/{userId}/interfaces")
     public Page<InterfaceResource> getAllInterfacesByUserId(
             @PathVariable(name = "userId") Long userId,
@@ -57,18 +73,29 @@ public class InterfaceController {
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
-
+    @Operation(summary = "Get Interface by Id", description = "Get Interface by Id", tags = { "interfaces" })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Interface returned", content = @Content(mediaType = "application/json"))
+    })
     @GetMapping("/interfaces/{interfaceId}")
     public InterfaceResource getInterfaceById(
             @PathVariable(name = "interfaceId") Long interfaceId) {
         return convertToResourceInterface(interfaceService.getInterfaceById(interfaceId));
     }
+    @Operation(summary = "Update Interfaces", description = "Update Interfaces", tags = { "interfaces" })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Interface updated", content = @Content(mediaType = "application/json"))
+    })
     @PutMapping("/interfaces/{interfaceId}")
     public InterfaceResource updateInterface(
             @PathVariable(name = "interfaceId") Long interfaceId,
             @Valid @RequestBody SaveInterfaceResource resource) {
         return convertToResourceInterface(interfaceService.updateInterface(interfaceId, convertToEntityInterface(resource)));
     }
+    @Operation(summary = "Delete Interfaces", description = "Delete Interfaces", tags = { "interfaces" })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Interface deleted", content = @Content(mediaType = "application/json"))
+    })
     @DeleteMapping("/interfaces/{interfaceId}")
     public ResponseEntity<?> deleteInterface(
             @PathVariable(name = "interfaceId") Long interfaceId) {
