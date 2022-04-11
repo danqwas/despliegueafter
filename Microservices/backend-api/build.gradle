@@ -29,13 +29,13 @@ dependencies {
     // https://mvnrepository.com/artifact/org.ocpsoft.prettytime/prettytime
     implementation group: 'org.ocpsoft.prettytime', name: 'prettytime', version: '5.0.2.Final'
 
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.3'
 
     implementation 'org.springframework.boot:spring-boot-starter-security'
     //implementation 'org.springframework.cloud:spring-cloud-starter-config'
     //implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     //implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
-    // https://mvnrepository.com/artifact/org.postgresql/postgresql
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.3'
     // https://mvnrepository.com/artifact/javax.validation/validation-api
     implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
     compileOnly 'org.projectlombok:lombok'
@@ -57,7 +57,7 @@ dependencies {
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat
     //implementation group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: '2.6.6'
-
+    implementation 'org.apache.maven.plugins:maven-compiler-plugin:3.10.1'
 
 }
 
