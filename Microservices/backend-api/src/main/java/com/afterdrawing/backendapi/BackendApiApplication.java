@@ -15,6 +15,7 @@ import java.util.Locale;
 
 @EnableJpaAuditing
 @SpringBootApplication
+@EnableAsync
 public class BackendApiApplication {
 
     public static void main(String[] args) {

@@ -31,8 +31,15 @@ public class User {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Size(max = 100)
+
     @Lob
     @Column(name = "password", nullable = false)
     private String password;
+
+
+    private Boolean using2FA;
+
+    private String secretKey;
+
+    private Boolean enabled;
 }
