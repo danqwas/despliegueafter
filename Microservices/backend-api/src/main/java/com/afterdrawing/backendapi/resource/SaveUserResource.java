@@ -1,20 +1,13 @@
-package com.afterdrawing.backendapi.core.entity;
-
+package com.afterdrawing.backendapi.resource;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Lob;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table(name = "user")
 @Data
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-
+public class SaveUserResource {
     @Size(max = 15)
     @Column(name = "userName", nullable = false, unique = true)
     private String userName;
@@ -31,15 +24,8 @@ public class User {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-
+    @Size(max = 100)
     @Lob
     @Column(name = "password", nullable = false)
     private String password;
-
-
-    private Boolean using2FA;
-
-    private String secretKey;
-
-    private Boolean enabled;
 }

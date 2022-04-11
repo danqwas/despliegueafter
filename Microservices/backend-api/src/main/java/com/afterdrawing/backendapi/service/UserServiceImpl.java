@@ -5,25 +5,30 @@ import com.afterdrawing.backendapi.core.repository.UserRepository;
 import com.afterdrawing.backendapi.core.service.UserService;
 import com.afterdrawing.backendapi.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
+
+
+
 
     @Autowired
     private UserRepository userRepository;
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public Page<User> getAllUsers(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     @Override
-    public Optional<User> getUserById(Long userId) {
-        return userRepository.findById(userId);
+    public User getUserById(Long userId) {
+
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
+        return user;
     }
 
 
@@ -37,13 +42,15 @@ public class UserServiceImpl implements UserService {
         user.setLastName(userRequest.getLastName());
         user.setEmail(userRequest.getEmail());
         user.setPassword(userRequest.getPassword());
-
         return userRepository.save(user);
     }
 
     @Override
     public User saveUser(User user) {
+
         return userRepository.save(user);
+
+
     }
 
     @Override
@@ -52,4 +59,6 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
         return ResponseEntity.ok().build();
     }
+
+
 }
